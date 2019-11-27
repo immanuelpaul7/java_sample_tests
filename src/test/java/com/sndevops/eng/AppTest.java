@@ -26,7 +26,7 @@ public class AppTest {
     
     @Test
     public void testFailedFixed() {
-        Assert.assertTrue(isPassed);
+        Assert.assertFalse(isPassed);
     }
         @Test
     public void testRegression() {
