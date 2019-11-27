@@ -30,6 +30,6 @@ public class AppTest {
     }
         @Test
     public void testRegression() {
-        Assert.assertTrue(isPassed);
+        Assert.assertFalse(isPassed);
     }
 }
