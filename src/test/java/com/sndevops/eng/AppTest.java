@@ -3,6 +3,7 @@ package com.sndevops.eng;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.Ignore;
 
 public class AppTest {
     private String INPUT = "44";
