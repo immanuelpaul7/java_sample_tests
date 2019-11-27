@@ -20,16 +20,16 @@ public class AppTest {
         Assert.assertEquals(isPassed,true);
     }
     @Test
-    public void testFailed() {
-        Assert.assertFalse(isPassed);
-    }
-    
-    @Test
     public void testFailedFixed() {
         Assert.assertTrue(isPassed);
     }
+    
+    @Test
+    public void testFailed() {
+        Assert.assertFalse(isPassed);
+    }
         @Test
     public void testRegression() {
-        Assert.assertTrue(isPassed);
+        Assert.assertFalse(isPassed);
     }
 }
