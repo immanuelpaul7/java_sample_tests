@@ -26,10 +26,10 @@ public class AppTest {
     
     @Test
     public void testFailedFixed() {
-        Assert.assertFalse(isPassed);
+        Assert.assertTrue(isPassed);
     }
         @Test
     public void testRegression() {
-        Assert.assertFalse(isPassed);
+        Assert.assertTrue(isPassed);
     }
 }
