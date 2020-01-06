@@ -25,11 +25,11 @@ public class AppTest {
     }
     
     @Test
-    public void testFailed() {
-        Assert.assertFalse(isPassed);
-    }
+//    public void testFailed() {
+  //      Assert.assertFalse(isPassed);
+    //}
         @Test
-    public void testRegression() {
-        Assert.assertFalse(isPassed);
-    }
+  //  public void testRegression() {
+  //      Assert.assertFalse(isPassed);
+ //   }
 }
