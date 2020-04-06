@@ -12,11 +12,8 @@ def repoUrl= "https://artifact.devsnc.com/content/repositories/services-1031"
 def repoName = "services-1031"
 pipeline {
     agent any
-    tools { 
-        maven 'Maven' 
-    }
     stages {
-        stage('CI') {
+        stage('Build') {
             steps {
                 snDevOpsStep()
                 echo 'Building..'
@@ -27,20 +24,6 @@ pipeline {
                 echo "globalprops -- ${env.snartifacttoolid} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
         sh 'mvn compile'
                 sh 'mvn verify'
-        sh """
-curl -X POST \
--H "content-type: application/json" \
--d '{"artifacts":[ \
-{"name":"${artifact1name}","url":"${artifact1url}","version":"${artifact1Version}", \
-"versionUrl":"${artifact1VersionUrl}", "repositoryUrl":"${repoUrl}","repositoryName":"${repoName}", \
-"semanticVersion": "${artifact1SemVersion}"}, \
-{"name":"${artifact2name}","url":"${artifact2url}","version":"${artifact2Version}", \
-"versionUrl":"${artifact2VersionUrl}", "repositoryUrl":"${repoUrl}","repositoryName":"${repoName}", \
-"semanticVersion": "${artifact2SemVersion}"}], \
-"pipelineName": "${env.JOB_NAME}","taskExecutionNumber": "${env.BUILD_NUMBER}", "stageName": "${env.STAGE_NAME}", \
-"branchName": "${env.GIT_BRANCH}"}' \
- http://${env.snuser}:${env.snpassword}@${env.snhost}/api/sn_devops/devops/artifact/registration?toolId=${env.snartifacttoolid}
-                """
         }
             post {
                 success {
@@ -48,59 +31,10 @@ curl -X POST \
                 }
             }
         }
-        stage('UAT deploy') {
-            steps {
+        stage('Deploy') {
+                steps {
                 snDevOpsStep()
-                sh 'mvn package'
-            }
-        }
-        stage('UAT test') {
-            stages {
-                stage('UAT unit test') {
-                    steps {
-                        snDevOpsStep()
-                        sh 'mvn compile'
-                        sh 'mvn verify'
-                    }
-                    post {
-                        success {
-                            junit '**/target/surefire-reports/*.xml' 
-                        }
-                    }
-                }
-                stage('UAT static code test') {
-                    steps {
-                        snDevOpsStep()
-                        sh 'mvn compile'
-                        sh 'mvn verify'
-                    }
-                    post {
-                        success {
-                            junit '**/target/surefire-reports/*.xml' 
-                        }
-                    }
-                }
-            }
-        }
-        stage('PROD') {
-            stages {
-                stage('deploy UAT') {
-                    when {
-                        branch 'dev'
-                    }
-                    steps {
-                        snDevOpsStep()
-                    }
-                }
-                stage('deploy PROD') {
-                    when {
-                        branch 'master'
-                    }
-                    steps {
-                        snDevOpsStep()
-                        snDevOpsChange()
-                    }
-                }
+                snDevOpsChange()
             }
         }
     }
