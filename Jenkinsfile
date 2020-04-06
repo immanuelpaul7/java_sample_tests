@@ -12,6 +12,9 @@ def repoUrl= "https://artifact.devsnc.com/content/repositories/services-1031"
 def repoName = "services-1031"
 pipeline {
     agent any
+    tools {
+       maven 'Maven'
+    }
     stages {
         stage('Build') {
             steps {
@@ -22,8 +25,8 @@ pipeline {
         echo "Stage name is ${env.STAGE_NAME}"
             echo "GIT branch is ${env.GIT_BRANCH}"
                 echo "globalprops -- ${env.snartifacttoolid} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
-        sh 'maven compile'
-                sh 'maven verify'
+        sh 'mvn compile'
+                sh 'mvn verify'
         }
             post {
                 success {
