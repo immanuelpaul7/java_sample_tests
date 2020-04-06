@@ -22,8 +22,8 @@ pipeline {
         echo "Stage name is ${env.STAGE_NAME}"
             echo "GIT branch is ${env.GIT_BRANCH}"
                 echo "globalprops -- ${env.snartifacttoolid} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
-        sh 'mvn compile'
-                sh 'mvn verify'
+        sh 'maven compile'
+                sh 'maven verify'
         }
             post {
                 success {
