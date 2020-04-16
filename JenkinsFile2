@@ -34,6 +34,26 @@ pipeline {
                 }
             }
         }
+        stage('UAT') {
+                steps {
+                snDevOpsStep()
+            }
+        }
+        stage('TEST') {
+                steps {
+                snDevOpsStep()
+            }
+        }
+        stage('DEPLOY') {
+                steps {
+                snDevOpsStep()
+            }
+        }    
+        stage('STAGE') {
+                steps {
+                snDevOpsStep()
+            }
+        }        
         stage('Prod') {
                 steps {
                 snDevOpsStep()
