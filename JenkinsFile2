@@ -54,7 +54,7 @@ pipeline {
                 snDevOpsStep()
             }
         }        
-        stage('Prod') {
+        stage('PROD') {
                 steps {
                 snDevOpsStep()
                 snDevOpsChange()
