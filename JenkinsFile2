@@ -11,6 +11,7 @@ def artifact2SemVersion="3.4.0"
 def repoUrl= "https://artifact.devsnc.com/content/repositories/services-1031"
 def repoName = "services-1031"
 pipeline {
+    agent any
     tools {
        maven 'Maven'
     }
