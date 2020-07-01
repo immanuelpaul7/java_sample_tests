@@ -1,4 +1,4 @@
-def artifact1name = "sa-web3.jar"
+def artifact1name = "sa-web4.jar"
 def artifact1url = "https://artifact.devsnc.com/content/groups/devcom/sa/web/sentiment-analysis-web"
 def artifact1Version = "3.3"
 def artifact1VersionUrl = "https://artifact.devsnc.com/content/groups/devcom/sa/web/sentiment-analysis-web/3.3-snapshot/sa-web-3.3.jar"
