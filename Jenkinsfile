@@ -4,7 +4,7 @@ def version = "${env.BUILD_NUMBER}.0"
 pipeline {
    agent any
    tools {
-      maven 'Jenkins Maven'
+      maven 'Maven'
    }
    stages {
       
