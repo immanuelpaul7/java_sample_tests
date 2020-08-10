@@ -1,44 +1,43 @@
-def artifact1name = "sa-web4.jar"
-def artifact1url = "https://artifact.devsnc.com/content/groups/devcom/sa/web/sentiment-analysis-web"
-def artifact1Version = "3.3"
-def artifact1VersionUrl = "https://artifact.devsnc.com/content/groups/devcom/sa/web/sentiment-analysis-web/3.3-snapshot/sa-web-3.3.jar"
-def artifact1SemVersion ="3.3.0"
-def artifact2name = "sa-frontend.jar"
-def artifact2url = "https://artifact.devsnc.com/content/groups/dev/com/sa/sentiment-frontend"
-def artifact2Version = "3.4"
-def artifact2VersionUrl ="https://artifact.devsnc.com/content/groups/dev/com/sa/sentiment-frontend/3.4-snapshot/sa-web-3.4.jar"
-def artifact2SemVersion="3.4.0"
-def repoUrl= "https://artifact.devsnc.com/content/repositories/services-1031"
-def repoName = "services-1031"
+def semanticVersion = "${env.BUILD_NUMBER}.0.0-HOTFIX1"
+def packageName = "sample_devops-package_${env.BUILD_NUMBER}"
+def version = "${env.BUILD_NUMBER}.0"
 pipeline {
-    agent any
-    tools {
-       maven 'Maven'
-    }
-    stages {
-        stage('Build') {
-            steps {
-                snDevOpsStep()
-                echo 'Building..'
-                echo "Pipeline name is ${env.JOB_NAME}"
-        echo "Pipeline run rumber is ${env.BUILD_NUMBER}"
-        echo "Stage name is ${env.STAGE_NAME}"
-            echo "GIT branch is ${env.GIT_BRANCH}"
-                echo "globalprops -- ${env.snartifacttoolid} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
-        sh 'mvn compile'
-                sh 'mvn verify'
-        }
-            post {
-                success {
+   agent any
+   tools {
+      maven 'Jenkins Maven'
+   }
+   stages {
+      
+       stage("build") {
+                steps {
+                    snDevOpsStep ()
+                    echo "Building" 
+                    sh 'mvn -X clean install -DskipTests'
+                    sleep 5
+                }
+       }
+      
+      stage("test") {
+           steps {
+               snDevOpsStep ()
+               echo "Testing"
+               sh 'mvn test'
+               sleep 3
+           }
+          post {
+                always {
                     junit '**/target/surefire-reports/*.xml' 
                 }
-            }
+          }
         }
-        stage('Deploy') {
-                steps {
-                snDevOpsStep()
-                snDevOpsChange()
-            }
-        }
-    }
+    
+      stage("deploy") {
+             steps{
+                  snDevOpsStep ()
+                  echo "deploy in prod"
+                  echo "deploy in prod"
+                  snDevOpsChange()              
+              }
+      }  
+  }
 }
