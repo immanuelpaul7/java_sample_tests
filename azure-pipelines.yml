@@ -21,10 +21,6 @@ jobs:
 - job: 'Test'
   dependsOn: 'Build'
   steps:
-  - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-    inputs:
-      connectedServiceName: 'PERLI'
-      UpstreamJob: Build
   - task: ServiceNow-DevOps-Agent-Job-Notification@1
     inputs:
       connectedServiceName: 'PERLI'
