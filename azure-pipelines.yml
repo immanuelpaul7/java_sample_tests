@@ -26,6 +26,9 @@ jobs:
       connectedServiceName: 'PERLI'
       upstream: 'Build'
       Phase: 'STARTED'
+  - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+    inputs:
+      connectedServiceName: 'PERLI'
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
