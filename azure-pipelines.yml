@@ -1,22 +1,50 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
 trigger:
 - master
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+name: $(Date:yyyyMMdd)$(Rev:.r)
+jobs:
+- job: 'Build'
+  steps:
+  - task: ServiceNow-DevOps-Agent-Job-Notification@1
+    inputs:
+      connectedServiceName: 'devopsdev5_azure'
+      Phase: 'STARTED'
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Write your commands here
+        echo 'Hello world.'
+  - task: ServiceNow-DevOps-Agent-Job-Notification@1
+    inputs:
+      connectedServiceName: 'devopsdev5_azure'
+      Phase: 'COMPLETED'
+- job: 'Test'
+  dependsOn: 'Build'
+  steps:
+  - task: ServiceNow-DevOps-Agent-Job-Notification@1
+    inputs:
+      connectedServiceName: 'devopsdev5_azure'
+      upstream: 'Build'
+      Phase: 'STARTED'
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'test'
+      publishJUnitResults: false
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      javaHomeOption: 'JDKVersion'
+      mavenVersionOption: 'Default'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: false
+      sonarQubeRunAnalysis: false
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      testRunTitle: '$(Agent.JobName)'
+    condition: succeededOrFailed()
+  - task: ServiceNow-DevOps-Agent-Job-Notification@1
+    inputs:
+      connectedServiceName: 'devopsdev5_azure'
+      upstream: 'Build'
+      Phase: 'COMPLETED'
+    condition: true
