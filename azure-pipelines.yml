@@ -16,7 +16,7 @@ jobs:
         echo 'Hello world.'
   - task: ServiceNow-DevOps-Agent-Job-Notification@1
     inputs:
-      connectedServiceName: 'v'
+      connectedServiceName: 'PERLI'
       Phase: 'COMPLETED'
 - job: 'Test'
   dependsOn: 'Build'
