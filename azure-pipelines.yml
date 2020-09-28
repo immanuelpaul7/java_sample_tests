@@ -6,7 +6,7 @@ jobs:
   steps:
   - task: ServiceNow-DevOps-Agent-Job-Notification@1
     inputs:
-      connectedServiceName: 'devopsdev5_azure'
+      connectedServiceName: 'PERLI'
       Phase: 'STARTED'
   - task: Bash@3
     inputs:
@@ -16,14 +16,14 @@ jobs:
         echo 'Hello world.'
   - task: ServiceNow-DevOps-Agent-Job-Notification@1
     inputs:
-      connectedServiceName: 'devopsdev5_azure'
+      connectedServiceName: 'v'
       Phase: 'COMPLETED'
 - job: 'Test'
   dependsOn: 'Build'
   steps:
   - task: ServiceNow-DevOps-Agent-Job-Notification@1
     inputs:
-      connectedServiceName: 'devopsdev5_azure'
+      connectedServiceName: 'PERLI'
       upstream: 'Build'
       Phase: 'STARTED'
   - task: Maven@3
@@ -44,7 +44,7 @@ jobs:
     condition: succeededOrFailed()
   - task: ServiceNow-DevOps-Agent-Job-Notification@1
     inputs:
-      connectedServiceName: 'devopsdev5_azure'
+      connectedServiceName: 'PERLI'
       upstream: 'Build'
       Phase: 'COMPLETED'
     condition: true
