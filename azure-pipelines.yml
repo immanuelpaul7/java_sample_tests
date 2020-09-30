@@ -1,50 +1,42 @@
 trigger:
 - master
-name: $(Date:yyyyMMdd)$(Rev:.r)
-jobs:
-- job: 'Build'
-  steps:
-  - task: ServiceNow-DevOps-Agent-Job-Notification@1
-    inputs:
-      connectedServiceName: 'PERLI'
-      Phase: 'STARTED'
-  - task: Bash@3
-    inputs:
-      targetType: 'inline'
-      script: |
-        # Write your commands here
-        echo 'Hello world.'
-  - task: ServiceNow-DevOps-Agent-Job-Notification@1
-    inputs:
-      connectedServiceName: 'PERLI'
-      Phase: 'COMPLETED'
-- job: 'Test'
-  dependsOn: 'Build'
-  steps:
-  - task: ServiceNow-DevOps-Agent-Job-Notification@1
-    inputs:
-      connectedServiceName: 'PERLI'
-      upstream: 'Build'
-      Phase: 'STARTED'
-  - task: Maven@3
-    inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'test'
-      publishJUnitResults: false
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      javaHomeOption: 'JDKVersion'
-      mavenVersionOption: 'Default'
-      mavenAuthenticateFeed: false
-      effectivePomSkip: false
-      sonarQubeRunAnalysis: false
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      testRunTitle: '$(Agent.JobName)'
-    condition: succeededOrFailed()
-  - task: ServiceNow-DevOps-Agent-Job-Notification@1
-    inputs:
-      connectedServiceName: 'PERLI'
-      upstream: 'Build'
-      Phase: 'COMPLETED'
-    condition: true
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Stage1
+  jobs:
+  - job: "Stage1Job1"
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+  - job: "Stage1Job2"
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+- stage: Stage2
+  dependsOn: Stage1
+  jobs:
+  - job: Stage2Job1
+    pool: server
+    steps:
+    - task: Delay@1
+      inputs:
+        delayForMinutes: '0'
