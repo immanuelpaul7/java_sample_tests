@@ -9,37 +9,25 @@ stages:
   jobs:
   - job: "Stage1Job1"
     steps:
-    - task: Maven@3
+    - task: Delay@1
       inputs:
-        mavenPomFile: 'pom.xml'
-        publishJUnitResults: true
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        javaHomeOption: 'JDKVersion'
-        mavenVersionOption: 'Default'
-        mavenAuthenticateFeed: false
-        effectivePomSkip: false
-        sonarQubeRunAnalysis: false
-  - job: "Stage1Job2"
-    steps:
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'pom.xml'
-        publishJUnitResults: true
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        javaHomeOption: 'JDKVersion'
-        mavenVersionOption: 'Default'
-        mavenAuthenticateFeed: false
-        effectivePomSkip: false
-        sonarQubeRunAnalysis: false
+        delayForMinutes: 0
 - stage: Stage2
   dependsOn: Stage1
   jobs:
   - job: Stage2Job1
     pool: server
     steps:
-    - task: Delay@1
+    - task: Maven@3
       inputs:
-        delayForMinutes: '0'
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false    
     - task: InvokeRESTAPI@1
       inputs:
         connectionType: 'connectedServiceName'
