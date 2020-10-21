@@ -19,6 +19,7 @@ stages:
   dependsOn: Stage1
   jobs:
   - job: Stage2Job1
+    pool: server
     steps:
     - task: Maven@3
       inputs:
@@ -30,17 +31,22 @@ stages:
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: false      
+    - task: InvokeRESTAPI@1
+      inputs:
+        connectionType: 'connectedServiceName'
+        serviceConnection: 'PER-1'
+        method: 'POST'
+        body: |
+         {
+            "buildNumber": "$(build.buildId)",
+            "isMultiBranch": "true",
+            "branchName": "$(build.sourceBranchName)"
+         }
+        waitForCompletion: 'true'    
   - job: Stage2Job2C
     pool: server
     dependsOn: Stage2Job1
     steps:
-      - task: InvokeRESTAPI@1
-        inputs:
-          connectionType: 'connectedServiceName'
-          serviceConnection: 'PER-1'
-          method: 'POST'
-          body: |
-            "buildNumber": "$(build.buildId)",
-            "isMultiBranch": "true",
-            "branchName":"$(build.sourceBranchName)"
-          waitForCompletion: 'true'
+    - task: Delay@1
+      inputs:
+        delayForMinutes: 0
