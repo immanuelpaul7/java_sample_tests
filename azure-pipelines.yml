@@ -9,14 +9,16 @@ stages:
   jobs:
   - job: "Stage1Job1"
     steps:
-    - task: Delay@1
+    - task: CmdLine@2
       inputs:
-        delayForMinutes: 0
+        script: |
+          echo Write your commands here
+          
+          echo Hello world
 - stage: Stage2
   dependsOn: Stage1
   jobs:
   - job: Stage2Job1
-    pool: server
     steps:
     - task: Maven@3
       inputs:
