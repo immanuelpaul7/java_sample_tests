@@ -40,3 +40,22 @@ stages:
     - task: Delay@1
       inputs:
         delayForMinutes: '0'
+    - task: InvokeRESTAPI@1
+      inputs:
+        connectionType: 'connectedServiceName'
+        serviceConnection: 'PERLI'
+        method: 'POST'
+        body: |
+         {
+            "buildNumber": "$(build.buildId)",
+            "isMultiBranch": "true",
+            "branchName": "$(build.sourceBranchName)"
+         }
+        waitForCompletion: 'true'    
+  - job: Stage2Job2C
+    pool: server
+    dependsOn: Stage2Job1
+    steps:
+    - task: Delay@1
+      inputs:
+        delayForMinutes: 0
