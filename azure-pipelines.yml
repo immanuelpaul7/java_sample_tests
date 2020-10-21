@@ -43,4 +43,4 @@ stages:
             "buildNumber": "$(build.buildId)",
             "isMultiBranch": "true",
             "branchName":"$(build.sourceBranchName)"
-          waitForCompletion: 'false'
+          waitForCompletion: 'true'
