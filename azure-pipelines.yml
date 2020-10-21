@@ -43,7 +43,7 @@ stages:
     - task: InvokeRESTAPI@1
       inputs:
         connectionType: 'connectedServiceName'
-        serviceConnection: 'PERLI'
+        serviceConnection: 'PER-1'
         method: 'POST'
         body: |
          {
