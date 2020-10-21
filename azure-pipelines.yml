@@ -19,7 +19,6 @@ stages:
   dependsOn: Stage1
   jobs:
   - job: Stage2Job1
-    pool: server
     steps:
     - task: Maven@3
       inputs:
