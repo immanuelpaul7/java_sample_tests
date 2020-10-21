@@ -29,23 +29,18 @@ stages:
         mavenVersionOption: 'Default'
         mavenAuthenticateFeed: false
         effectivePomSkip: false
-        sonarQubeRunAnalysis: false    
-    - task: InvokeRESTAPI@1
-      inputs:
-        connectionType: 'connectedServiceName'
-        serviceConnection: 'PER-1'
-        method: 'POST'
-        body: |
-         {
-            "buildNumber": "$(build.buildId)",
-            "isMultiBranch": "true",
-            "branchName": "$(build.sourceBranchName)"
-         }
-        waitForCompletion: 'true'    
+        sonarQubeRunAnalysis: false      
   - job: Stage2Job2C
     pool: server
     dependsOn: Stage2Job1
     steps:
-    - task: Delay@1
-      inputs:
-        delayForMinutes: 0
+      - task: InvokeRESTAPI@1
+        inputs:
+          connectionType: 'connectedServiceName'
+          serviceConnection: 'PER-1'
+          method: 'POST'
+          body: |
+            "buildNumber": "$(build.buildId)",
+            "isMultiBranch": "true",
+            "branchName":"$(build.sourceBranchName)"
+          waitForCompletion: 'false'
