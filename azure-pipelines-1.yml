@@ -5,6 +5,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
+- stage: Stage1
+  jobs:
+  - job: "Stage1Job1"
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |
+          echo Write your commands here
+          
+          echo Hello world
 - stage: Stage2
   dependsOn: Stage1
   jobs:
