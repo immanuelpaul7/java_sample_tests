@@ -36,7 +36,8 @@ pipeline {
                   snDevOpsStep ()
                   echo "deploy in prod"
                   echo "deploy in prod"
-                  snDevOpsChange()              
+                  //snDevOpsChange()              
+                  snDevOpsChange(changeRequestAttributes: """{"requested_by":{"name":"test user"},"start_date":"2021-01-05 08:00:00","end_date:"2021-01-08 08:00:00"}""")                
               }
       }  
   }
