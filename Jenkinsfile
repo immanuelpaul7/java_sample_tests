@@ -46,9 +46,7 @@ pipeline {
                      "assignment_group":{
                         "name":"Application Development"
                      },
-                     "assigned_to":{
-                        "name":"Change Manager"
-                     },
+                     "assigned_to": "dc6053dcd7011200f2d224837e6103e0",
                      "risk":"2",
                      "business_service":{
                         "name":"SAP Enterprise Services"
