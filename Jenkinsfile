@@ -37,7 +37,7 @@ pipeline {
                   echo "deploy in prod"
                   echo "deploy in prod"
                   //snDevOpsChange()              
-                  snDevOpsChange(changeRequestDetails: """
+                  snDevOpsChange(changeRequestAttributes: """
                   {
                      "setCloseCode":false,
                      "attributes":{
