@@ -37,22 +37,25 @@ pipeline {
                   echo "deploy in prod"
                   echo "deploy in prod"
                   //snDevOpsChange()              
-                  snDevOpsChange(changeRequestAttributes: """
+                  snDevOpsChange(changeRequestDetails: """
                   {
-                     "requested_by":{
-                        "name":"test user1"
-                     },
-                     "category":"Service",
-                     "assignment_group":{
-                        "name":"Application Development"
-                     },
-                     "assigned_to": "dc6053dcd7011200f2d224837e6103e0",
-                     "risk":"2",
-                     "business_service":{
-                        "name":"SAP Enterprise Services"
-                     },
-                     "start_date":"2021-01-05 08:00:00",
-                     "end_date":"2021-01-08 08:00:00"
+                     "setCloseCode":false,
+                     "attributes":{
+                        "requested_by":{
+                           "name":"test user1"
+                        },
+                        "category":"Service",
+                        "assignment_group":{
+                           "name":"Application Development"
+                        },
+                        "assigned_to":"dc6053dcd7011200f2d224837e6103e0",
+                        "risk":"2",
+                        "business_service":{
+                           "name":"SAP Enterprise Services"
+                        },
+                        "start_date":"2021-01-05 08:00:00",
+                        "end_date":"2021-01-08 08:00:00"
+                     }
                   }
                   """)                
               }
