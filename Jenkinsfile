@@ -46,9 +46,9 @@ pipeline {
                         },
                         "category":"Service",
                         "assignment_group":{
-                           "name":"Application Development"
+                           "name":"Change Management"
                         },
-                        "assigned_to":"dc6053dcd7011200f2d224837e6103e0",
+                        "assigned_to":"f8588956937002002dcef157b67ffb98",
                         "risk":"2",
                         "business_service":{
                            "name":"SAP Enterprise Services"
