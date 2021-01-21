@@ -42,7 +42,7 @@ pipeline {
                      "requested_by":{
                         "name":"test user1"
                      },
-                     "category":"service",
+                     "category":"Service",
                      "assignment_group":{
                         "name":"Application Development"
                      },
