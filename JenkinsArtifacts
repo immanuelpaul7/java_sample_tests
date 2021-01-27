@@ -1,0 +1,43 @@
+def semanticVersion = "${env.BUILD_NUMBER}.0.0-HOTFIX1"
+def packageName = "sample_devops-package_${env.BUILD_NUMBER}"
+def version = "${env.BUILD_NUMBER}.0"
+pipeline {
+   agent any
+   tools {
+      maven 'Maven'
+   }
+   stages {
+      
+       stage("build") {
+                steps {
+                    echo "Building" 
+                    sh 'mvn -X clean install -DskipTests'
+                    sleep 5
+                    snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "sa-web-ui.jar21","version":"${version}","semanticVersion": "${version}.2","repositoryName": "servicesrepo-1131"}]}""")
+                }
+       }
+      
+      stage("test") {
+           steps {
+               echo "Testing"
+               sh 'mvn test'
+               sleep 3
+               
+           }
+          post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' 
+                }
+          }
+        }
+    
+      stage("deploy") {
+             steps{
+                  snDevOpsPackage(name: "sentimentpackage1", artifactsPayload: """{"artifacts": [{"name": "sa-web-ui.jar21","repositoryName": "servicesrepo-1131","version":"${version}"}]}""")
+                  echo "deploy in prod"
+                  echo "deploy in prod"
+                  snDevOpsChange()              
+              }
+      }  
+  }
+}
