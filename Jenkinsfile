@@ -49,7 +49,7 @@ pipeline {
                            "name":"Change Management"
                         },
                         "assigned_to":"f8588956937002002dcef157b67ffb98",
-                        "risk":"2",
+                        "risk":"4",
                         "business_service":{
                            "name":"SAP Enterprise Services"
                         },
