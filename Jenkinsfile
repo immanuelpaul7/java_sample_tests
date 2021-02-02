@@ -39,7 +39,7 @@ pipeline {
                   //snDevOpsChange()              
                   snDevOpsChange(changeRequestDetails: """
                   {
-                     "setCloseCode":false,
+                     "setCloseCode":true,
                      "attributes":{
                         "requested_by":{
                            "name":"test user1"
