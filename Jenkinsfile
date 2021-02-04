@@ -41,6 +41,7 @@ pipeline {
                   {
                      "setCloseCode":false,
                      "attributes":{
+                        "change_type": "standard",
                         "requested_by":{
                            "name":"test user1"
                         },
@@ -49,7 +50,10 @@ pipeline {
                            "name":"Incident Management"
                         },
                         "assigned_to": "63b4c2cd0bb23200ecfd818393673a95",
-                        "risk":"4",
+                        "risk":"2",
+                        "priority":"2",
+                        "impact": "1",
+                        "work_notes": "This update for work notes is from jenkins file",
                         "business_service":{
                            "name":"Corpsite Application"
                         },
