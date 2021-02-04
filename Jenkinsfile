@@ -41,7 +41,7 @@ pipeline {
                   {
                      "setCloseCode":false,
                      "attributes":{
-                        "change_type": "standard",
+                        "type": "standard",
                         "requested_by":{
                            "name":"test user1"
                         },
