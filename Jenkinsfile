@@ -53,7 +53,7 @@ pipeline {
                         "risk":"2",
                         "priority":"2",
                         "impact": "1",
-                        "work_notes": "This update for work notes is from jenkins file",
+                        "notes": "This update for work notes is from jenkins file",
                         "business_service":{
                            "name":"Corpsite Application"
                         },
