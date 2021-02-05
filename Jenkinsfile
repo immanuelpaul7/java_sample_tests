@@ -41,18 +41,12 @@ pipeline {
                   {
                      "setCloseCode":false,
                      "attributes":{
-                        "type": "normal",
                         "requested_by":{
                            "name":"test user1"
                         },
                         "category":"Service",
-                        "risk":"2",
                         "priority":"2",
-                        "impact": "1",
                         "comments": "This update for work notes is from jenkins file",
-                        "business_service":{
-                           "name":"Corpsite Application"
-                        },
                         "start_date":"2021-01-05 08:00:00",
                         "end_date":"2021-01-08 08:00:00"
                      }
