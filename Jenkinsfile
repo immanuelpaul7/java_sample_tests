@@ -46,7 +46,6 @@ pipeline {
                            "name":"test user1"
                         },
                         "category":"Service",
-                        "assigned_to": "63b4c2cd0bb23200ecfd818393673a95",
                         "risk":"2",
                         "priority":"2",
                         "impact": "1",
