@@ -41,13 +41,13 @@ pipeline {
                   {
                      "setCloseCode":false,
                      "attributes":{
+                        "number": "CHG2222222",
+                        "sys_id": "17fff696-ef47-46b4-aa1e-4795ccc4af86",
                         "requested_by":{
                            "name":"test user1"
                         },
                         "category":"Service",
-                        "sys_created_by": {
-                           "name":"test user2"
-                        },
+                        "sys_created_on": "2021-02-09 18:58:41",
                         "priority":"2",
                         "comments": "This update for work notes is from jenkins file",
                         "work_notes": "Update this to work_notes",
