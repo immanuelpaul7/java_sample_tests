@@ -46,6 +46,7 @@ pipeline {
                         "requested_by":{
                            "name":"test user1"
                         },
+"on_hold": "true",
                         "category":"Service",
                         "sys_created_on": "2021-02-09 18:58:41",
                         "priority":"2",
