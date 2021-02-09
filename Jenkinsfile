@@ -45,7 +45,7 @@ pipeline {
                            "name":"test user1"
                         },
                         "category":"Service",
-                        "created_by": {
+                        "sys_created_by": {
                            "name":"test user2"
                         },
                         "priority":"2",
