@@ -41,8 +41,8 @@ pipeline {
                   {
                      "setCloseCode":false,
                      "attributes":{
-                        "number": "CHG2222222",
-                        "sys_id": "17fff696-ef47-46b4-aa1e-4795ccc4af86",
+                        "sys_created_by": "1832fbe1d701120035ae23c7ce610369",
+                        "sys_updated_by": "56826bf03710200044e0bfc8bcbe5dca",                        
                         "requested_by":{
                            "name":"test user1"
                         },
