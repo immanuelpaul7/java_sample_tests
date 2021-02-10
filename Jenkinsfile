@@ -49,6 +49,7 @@ pipeline {
                          "on_hold": "true",
                          "watch_list": [{"name":"test user1"}, {"name":"test user2"}, {"name":"alva.pennigton"}, "56826bf03710200044e0bfc8bcbe5dca"],
                          "work_notes_list": ["56826bf03710200044e0bfc8bcbe5dca", "46c6f9efa9fe198101ddf5eed9adf6e7", "d8f57f140b20220050192f15d6673a98"],
+                         "assigned_to": "1832fbe1d701120035ae23c7ce610369",
                         "category":"Service",
                         "sys_created_on": "2021-02-09 18:58:41",
                         "priority":"2",
