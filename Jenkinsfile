@@ -43,6 +43,7 @@ pipeline {
                      "attributes":{
                         "sys_created_by": "1832fbe1d701120035ae23c7ce610369",
                         "sys_updated_by": "56826bf03710200044e0bfc8bcbe5dca",                        
+                        "on_hold": "true",
                         "requested_by":{
                            "name":"test user1"
                         },
