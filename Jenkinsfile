@@ -52,6 +52,8 @@ pipeline {
                         "category":"Service",
                         "sys_created_on": "2021-02-09 18:58:41",
                         "priority":"2",
+                        "work_start": "2021-01-05 08:00:00",
+                        "work_end": "2021-01-08 08:00:00",
                         "comments": "This update for work notes is from jenkins file",
                         "work_notes": "Update this to work_notes",
                         "start_date":"2021-01-05 08:00:00",
