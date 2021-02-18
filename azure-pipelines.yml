@@ -1,42 +1,105 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 trigger:
 - master
-
 pool:
   vmImage: 'ubuntu-latest'
-
 stages:
-- stage: Stage1
+- stage: BuildAndPublish
   jobs:
-  - job: "Stage1Job1"
-    steps:
-    - task: CmdLine@2
-      inputs:
-        script: |
-          echo Write your commands here
-          
-          echo Hello world
-- stage: Stage2
-  dependsOn: Stage1
-  jobs:
-  - job: Stage2Job1
+  - job: 'Build'
     steps:
     - task: Maven@3
+      name: 'Build'
+      displayName: 'Build'
       inputs:
         mavenPomFile: 'pom.xml'
-        publishJUnitResults: true
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        mavenOptions: '-DskipTests -Xmx3072m'
         javaHomeOption: 'JDKVersion'
-        mavenVersionOption: 'Default'
-        mavenAuthenticateFeed: false
-        effectivePomSkip: false
-        sonarQubeRunAnalysis: false        
-  - job: Stage2Job2C
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        goals: 'clean install'
+    #- task: PublishBuildArtifacts@1
+    #  inputs:
+    #    pathToPublish: '/home/vsts/.m2/repository/com/sa/web/sentiment-analysis-web/0.0.2-SNAPSHOT/sentiment-analysis-web-0.0.2-SNAPSHOT.jar'
+    #    artifactName: sentiment-analysis.jar
+  - job: 'PublishArtifact'
     pool: server
-    dependsOn: Stage2Job1
+    dependsOn: 'Build'
     steps:
-    - task: Delay@1
+    - task: InvokeRESTAPI@1
       inputs:
-        delayForMinutes: 0
+        connectionType: 'connectedServiceName'
+        serviceConnection: 'PER-1'
+        method: 'POST'
+        body: |
+          {
+            "artifacts":[
+                {
+                  "name":"_snowdevops.spring-boot-webapp",
+                  "version":"1.$(build.buildId)",
+                  "semanticVersion":"1.$(build.buildId).0",
+                  "repositoryName":"snowdevops.spring-boot-webapp"
+                }
+            ],
+            "pipelineName":"$(system.teamProject)/$(build.definitionName)",
+            "taskExecutionNumber":"$(build.buildId)",
+            "stageName":"$(system.jobDisplayName)",
+            "branchName": "$(build.sourceBranchName)"
+          }
+        urlSuffix: '/artifact/registration?orchestrationToolId=8f0820f6dbf12410a559721439961916'
+        waitForCompletion: 'false'
+- stage: TestAndPackage
+  dependsOn: 'BuildAndPublish'
+  jobs:          
+  - job: 'Test'
+    steps:
+    - task: Maven@3
+      name: 'Test'
+      displayName: 'Test'
+      inputs:
+        goals: 'test'
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/target/surefire-reports/*.xml'
+        testRunTitle: 'Test'
+  - job: 'Package'
+    pool: server
+    dependsOn: 'Test'
+    steps:
+      - task: InvokeRESTAPI@1
+        inputs:
+          connectionType: 'connectedServiceName'
+          serviceConnection: 'PER-1'
+          method: 'POST'
+          body: |
+            {
+              "name": "sp-package",
+              "artifacts":[ 
+                  {"name":"_snowdevops.spring-boot-webapp",
+                  "version":"1.$(build.buildId)", 
+                  "repositoryName":"snowdevops.spring-boot-webapp" 
+                  }
+              ],
+              "pipelineName": "$(system.teamProject)/$(build.definitionName)",
+              "taskExecutionNumber": "$(build.buildId)",
+              "stageName": "$(system.jobDisplayName)",
+              "branchName": "$(build.sourceBranchName)"
+            }
+          urlSuffix: '/package/registration?orchestrationToolId=8f0820f6dbf12410a559721439961916'
+          waitForCompletion: 'false'
+- stage: Deploy
+  dependsOn: 'TestAndPackage'
+  jobs:
+  - job: 'Deploy'
+    pool : server
+    steps:
     - task: InvokeRESTAPI@1
       inputs:
         connectionType: 'connectedServiceName'
@@ -48,4 +111,5 @@ stages:
             "isMultiBranch": "true",
             "branchName": "$(build.sourceBranchName)"
          }
-        waitForCompletion: 'true'  
+        urlSuffix: '/orchestration/changeControl?toolId=8f0820f6dbf12410a559721439961916'
+        waitForCompletion: 'true'
