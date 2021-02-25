@@ -92,7 +92,7 @@ stages:
               "stageName": "$(system.jobDisplayName)",
               "branchName": "$(build.sourceBranchName)"
             }
-          urlSuffix: '/package/registration?orchestrationToolId=8f0820f6dbf12410a559721439961916'
+          urlSuffix: '/package/registration?orchestrationToolId=4ff68c3ddb6a2010ce49f7541d961946'
           waitForCompletion: 'false'
 - stage: Deploy
   dependsOn: 'TestAndPackage'
@@ -111,5 +111,5 @@ stages:
             "isMultiBranch": "true",
             "branchName": "$(build.sourceBranchName)"
          }
-        urlSuffix: '/orchestration/changeControl?toolId=8f0820f6dbf12410a559721439961916'
+        urlSuffix: '/orchestration/changeControl?toolId=4ff68c3ddb6a2010ce49f7541d961946'
         waitForCompletion: 'true'
