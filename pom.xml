@@ -5,6 +5,10 @@
   <artifactId>devops-java-project</artifactId>
   <packaging>jar</packaging> 
   <version>1.0-SNAPSHOT</version>
+  <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+  </configuration>
   <name>devops-java-project</name>
   <url>http://maven.apache.org</url>
   <dependencies>
@@ -16,4 +20,7 @@
 	</dependency>
   </dependencies>
 </project>
- 
+<properties>
+     <maven.compiler.source>1.8</maven.compiler.source>
+     <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
