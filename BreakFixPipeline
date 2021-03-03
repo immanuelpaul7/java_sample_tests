@@ -1,0 +1,69 @@
+def semanticVersion = "${env.BUILD_NUMBER}.0.0-HOTFIX1"
+def packageName = "sample_devops-package_${env.BUILD_NUMBER}"
+def version = "${env.BUILD_NUMBER}.0"
+pipeline {
+   agent any
+   tools {
+      maven 'Maven'
+   }
+   stages {
+       stage("CI") {
+                steps {
+                    snDevOpsStep()
+                    snDevOpsChange()
+                    echo "Building" 
+                    sh 'mvn -X clean install -DskipTests'
+                    sleep 5
+                }
+       }
+       stage("STAGE") {
+                steps {
+                    snDevOpsStep()
+                    echo "Building" 
+                    sh 'mvn -X clean install -DskipTests'
+                    sleep 5
+                }
+       }       
+      stage("UAT") {
+           steps {
+               snDevOpsStep()
+               echo "Testing"
+               sh 'mvn test'
+               sleep 3
+           }
+          post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' 
+                }
+          }
+        }
+      stage("DEPLOY") {
+             steps{
+                  snDevOpsStep()
+                  echo "deploy in prod"
+                  echo "deploy in prod"
+              }
+      }  
+      stage("TEST") {
+           steps {
+               snDevOpsStep()
+               echo " post_deploy Testing"
+               sh 'mvn test'
+               sleep 3
+           }
+          post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' 
+                }
+          }
+      }
+      stage("PROD") {
+             steps{
+                snDevOpsStep()
+                echo "deploy final"
+                echo "final deploy in prod"
+                snDevOpsChange() 
+              }
+      }   
+  }
+}
