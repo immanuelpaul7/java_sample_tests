@@ -34,9 +34,6 @@ pipeline {
       stage("deploy") {
              steps{
                   snDevOpsStep ()
-                  echo "deploy in prod"
-                  echo "deploy in prod"
-                  //snDevOpsChange()              
                   snDevOpsChange(changeRequestDetails: """
                   {
                      "setCloseCode":false,
