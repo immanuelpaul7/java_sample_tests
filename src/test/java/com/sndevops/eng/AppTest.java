@@ -24,12 +24,12 @@ public class AppTest {
         Assert.assertTrue(isPassed);
     }
     
-//    @Test
-//    public void testFailed() {
-  //      Assert.assertFalse(isPassed);
-    //}
-  //      @Test
-  //  public void testRegression() {
-  //      Assert.assertFalse(isPassed);
- //   }
+   @Test
+   public void testFailed() {
+       Assert.assertFalse(isPassed);
+    }
+       @Test
+   public void testRegression() {
+       Assert.assertFalse(isPassed);
+   }
 }
